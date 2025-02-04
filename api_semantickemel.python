@@ -1,0 +1,45 @@
+from fastapi import FastAPI, WebSocket, Depends
+from pydantic import BaseModel
+from semantic_kernel import Kernel
+import asyncio
+
+app = FastAPI()
+kernel = Kernel()
+
+# Modelo para configurações da API
+class APISettings(BaseModel):
+    model: str = "gpt-4"
+    temperature: float = 0.7
+
+settings = APISettings()
+
+@app.get("/config")
+def get_config():
+    return settings
+
+@app.put("/config")
+def update_config(new_settings: APISettings):
+    global settings
+    settings = new_settings
+    return {"message": "Configuração atualizada"}
+
+@app.websocket("/chat")
+async def chat_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        try:
+            data = await websocket.receive_text()
+            response = await process_message(data)
+            await websocket.send_text(response)
+        except Exception as e:
+            await websocket.close()
+            break
+
+async def process_message(message: str) -> str:
+    """Processa mensagens usando Semantic Kernel."""
+    # Aqui você pode configurar o Kernel para interagir com um modelo de IA
+    return f"Resposta processada: {message}"
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
