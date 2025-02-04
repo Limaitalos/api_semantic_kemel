@@ -1,1 +1,0 @@
-# api_semantic_kemel

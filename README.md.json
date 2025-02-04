@@ -1,0 +1,26 @@
+{
+  "title": "Chat API com Configurações e Semantic Kernel",
+  "description": "Este projeto implementa uma API de chat usando FastAPI e WebSocket, além de um sistema de configuração de IA baseado no Semantic Kernel.",
+  "installation": {
+    "prerequisites": [
+      "Python 3.8+",
+      "FastAPI",
+      "Uvicorn",
+      "Semantic Kernel"
+    ],
+    "steps": [
+      "Clone este repositório",
+      "Instale as dependências com `pip install -r requirements.txt`",
+      "Execute o servidor com `uvicorn main:app --reload`"
+    ]
+  },
+  "usage": {
+    "endpoints": {
+      "GET /config": "Retorna as configurações atuais da API",
+      "PUT /config": "Atualiza as configurações da API",
+      "WebSocket /chat": "Conecta ao chat e processa mensagens via Semantic Kernel"
+    }
+  },
+  "license": "MIT"
+}
+# api_semantic_kemel
